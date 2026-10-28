@@ -1,0 +1,57 @@
+source,category,how,link_attr,approx_authority,value,effort,risk,tier,fits_agency,fits_tools_site,fits_ecommerce,fits_local,cite
+Google Business Profile,entity profile,"Only if eligible: a location that receives customers or you travel to them; virtual offices ineligible",n/a,n/a,"ENT, local",L,M (suspension if ineligible),[G],yes if eligible,no,yes if physical store,yes,[9] support.google.com/business/answer/3038177
+Bing Places / Apple Business Connect,entity profile,"Identical name, phone, site to GBP",n/a,n/a,"ENT, local",L,L,[CLAIM],yes,no,maybe,yes,no external source (catalogue entry 2026-10-20; verify before relying)
+LinkedIn company page + founder profile,entity profile,"Complete page; founder links it; long-form posts",redirect/nofollow reported - unverified,unverified,"ENT (sameAs), AI",L,L,[CLAIM],yes,yes,yes,yes,no external source (catalogue entry 2026-10-20; verify before relying)
+Crunchbase,entity profile,Free profile,nofollow (archived copies),"DR 91 (approx., Ahrefs via SaaSCity 2026-10-07)",ENT,L,L (anyone can edit),[DATA],yes,yes,yes,maybe,[10] saascity.io/directories
+Wellfound,entity profile,Free company page,unverified,unverified,"ENT, hiring",L,L,[CLAIM],yes,yes,maybe,no,no external source (catalogue entry 2026-10-20; verify before relying)
+Clutch,B2B directory,"Free profile; verified client reviews","nofollow (official: not a follow link)","DR 79 (approx., IdeaProof Aug 2026)","RT, ENT, AI",M,L,[G],yes,no,no,maybe (B2B services),[11] help.clutch.co
+GoodFirms,B2B directory,Free (PRO $49/mo),nofollow,"DR 87 (approx., via SaaSCity)","RT, ENT",M,L,[DATA],yes,maybe,no,no,[10]
+DesignRush,B2B directory,Profile; paid tiers for placement,unverified,unverified,RT,L,L,[CLAIM],yes,no,no,no,no external source (catalogue entry 2026-10-20; verify before relying)
+Trustpilot,review platform,Free business profile,nofollow,"DR 94 (approx., via SaaSCity)","ENT, reviews",L,L,[DATA],yes,yes,yes,yes,[10]
+G2 / Capterra / GetApp,software review platform,"Free listing (software products only); G2 buying Capterra/GetApp/Software Advice (Jan 2026)",no link at all on free profiles,"DR 91/91/85 (approx., via SaaSCity)","ENT, reviews",M,L,[DATA][G],no,yes if software,no,no,[10][12]
+YouTube channel,owned media,"Real videos with the brand in titles",redirect reported - unverified,n/a,"AI, RT",H,L,[DATA],yes,yes,yes,yes,[8] ahrefs.com/blog/ai-brand-visibility-correlations
+X / Facebook / Instagram / Pinterest,social profiles,"Claim handles; list in sameAs",redirect/nofollow reported,n/a,"ENT, RT",L,L,[G] (Mueller 2014: mostly ignored),yes,yes,yes,yes,[13]
+Startup India / DPIIT recognition,government,"Free recognition; public profile format unconfirmed",unverified,n/a,ENT (government),M,L,[G],yes (India),yes (India),yes (India),maybe,[14] startupindia.gov.in
+Justdial / Sulekha,local directory (India),"Free + paid listings; services",unverified,n/a,"local citation, leads",L,L,[CLAIM],maybe,no,no,yes,no external source (catalogue entry 2026-10-20; verify before relying)
+IndiaMART / TradeIndia,B2B goods directory (India),"Free + paid; goods only - poor fit for services",unverified,n/a,"citation, leads",L,L,[CLAIM],no,no,yes if goods,maybe,no external source (catalogue entry 2026-10-20; verify before relying)
+NASSCOM / chambers (e.g. FKCCI),association,"PAID membership (NASSCOM associate ~Rs 10k + GST per third party, unverified)",unverified,n/a,"ENT, network",M,L,[CLAIM],maybe,no,no,maybe,[15]
+YourStory,editorial (India),"Editorial pitch once you have traction; paid brand posts must be labelled sponsored",unverified,unverified,"ENT, AI, maybe LE",H,M if paid and unlabelled,[CLAIM],yes,yes,maybe,no,[1]
+GitHub org / repos / READMEs,developer ecosystem,"Useful open-source utilities; full org profile","README links nofollow (one curl test); profile link unverified",unverified,"ENT, RT, AI",M,L,[DATA],yes,yes,no,no,[16]
+Awesome lists (GitHub),developer ecosystem,"One PR per item per the list's CONTRIBUTING",nofollow (GitHub),n/a,"RT, mirrors",M,L unless mass-PR'd,[G],yes,yes,no,no,[17]
+Dev.to,developer publishing,"Republish with canonical_url","in-article links followed (2 checks); profile field ugc",unverified,"small LE, RT",M,"M: Google recommends noindex not canonical for syndication (2023-05); copy may outrank you",[DATA][G],yes,yes,no,no,[16][18][19]
+Hashnode / Medium / Indie Hackers,developer publishing,"Cross-post; Medium import and Hashnode set canonical",nofollow/ugc in checks,n/a,RT,M,L,[DATA][G],yes,yes,no,no,[16][18][20]
+Stack Overflow / Stack Exchange,community,"Answer well; link only when the link is the answer","nofollow default; current rule unverified",n/a,"RT, ENT",H,H if promotional,[CLAIM],yes,yes,no,no,[5]
+Show HN,launch platform,Post a working tool,"story link nofollow below ~9-12 points, plain above (one check 2026-10-07); comments nofollow","DR 91 (approx., via SaaSCity)","RT, follow-on coverage, maybe LE",M,L,[DATA],maybe,yes,no,no,[21]
+Product Hunt,launch platform,Free launch,"noreferrer noopener ugc (2 checks); 11/20 launch pages noindex","DR 91 (approx., via SaaSCity)","RT, ENT",M,L,[DATA],maybe,yes,maybe (D2C products),no,[10][18]
+SaaSHub,software directory,"Free; re-verify listing quarterly","verified listings followed (29/30); unverified nofollow","DR 80 (approx., via SaaSCity)","small LE, RT",L,L,[DATA],no,yes,no,no,[10]
+AlternativeTo,software directory,Free queue or $5 priority,"new listings nofollow; some established apps followed","DR 81 (approx., via SaaSCity)",RT,L,L,[DATA],no,yes,no,no,[10]
+Vercel partners / Next.js showcase,vendor ecosystem,"Apply at vercel.com/partners; showcase has no public submission",unverified,n/a,"ENT, leads",H,L,[G] (showcase [CLAIM]),yes if Next.js shop,no,no,no,[22]
+Shopify / Webflow partner directories,vendor ecosystem,"NOT free: Shopify tier-gated; Webflow needs paid plan + exam + 3 sites + 400 points",unverified,n/a,leads,H,L,[G],maybe,no,no,no,[23]
+Razorpay Partner,vendor ecosystem,"Referral programme; no public partner directory found",n/a,n/a,"revenue, not links",L,L,[G],yes (India),no,no,no,[24]
+npm / Chrome Web Store / VS Code Marketplace,developer ecosystem,Homepage/developer fields on real packages or extensions,unverified,n/a,"ENT, RT",M,L,[CLAIM],yes,yes,no,no,no external source (catalogue entry 2026-10-20; verify before relying)
+Source of Sources,journalist platform,"Free (donation); <= 3 digests/day; answer as an expert",36.26% of requests offered follow links,n/a,"LE, AI",M,L,[DATA],yes,yes,yes,yes,[25][29]
+Qwoted,journalist platform,"Free Basic: 2 pitches/month, 2-hour delay","40.17% offered some link; 70.3% from DR 70+",n/a,"LE, AI",M,L,[G][DATA],yes,yes,yes,yes,[25][26]
+HARO (Featured-owned since Apr 2025),journalist platform,"Relaunched digest, reported free; tiers changed - check",varies,n/a,"LE, AI",M,M (pre-shutdown 38% of requests from DR 0-9),[G][DATA],yes,yes,yes,yes,[25][27]
+Featured.com,journalist platform,"Limited free + paid; answers go into roundups",varies,n/a,"AI, some LE",M,M (roundup site quality),[DATA] 18-20% approval on 573 pitches (vendor),yes,yes,maybe,maybe,[28]
+MentionMatch (ex-Help a B2B Writer),journalist platform,Free for sources,varies,n/a,"LE, AI",M,L,[G],yes,yes,maybe,no,[29]
+Digital PR with original data,earned editorial,"Publish a real study with method and data; pitch the finding",varies,n/a,"LE, AI, ENT",H,L,[DATA] top tactic for 48.6% of 518 SEOs; 40% of journalists value original data (n=897),yes,yes,yes,maybe,[30][31]
+Free tools as link magnets,earned editorial,"Calculators/utilities + resource-page outreach",varies,n/a,"LE, RT",H,L,[CLAIM] (outreach reply baseline 8.5% [DATA]),maybe,yes,maybe,no,[32]
+Broken-link building,earned editorial,"Find dead resources on relevant pages; offer a real replacement",varies,n/a,LE,H,L,[DATA] supply (66.5% link rot); conversion [CLAIM],yes,yes,maybe,maybe,[33]
+Unlinked-mention reclamation,earned editorial,"Find existing mentions; ask for a link",varies,n/a,LE,L,L,[PROVEN] method; rates unverified,yes,yes,yes,yes,[34]
+Testimonials / vendor customer stories,earned editorial,"Real testimonial or co-written case study for vendors you use; vendor decides the link",vendor decides,n/a,"LE, ENT",L-M,M if a link is your condition (= exchange),[CLAIM],yes,yes,yes,maybe,[35][1]
+Podcasts / meetups / conference speaker pages,earned editorial,Guest or talk,varies,n/a,"AI, ENT, RT",M,L,[CLAIM],yes,yes,maybe,yes,no external source (catalogue entry 2026-10-20; verify before relying)
+University / alumni features,earned editorial,Alumni story on the college site,varies,n/a,"ENT, LE",L,L,[CLAIM] (.edu has no inherent bonus),yes,yes,maybe,maybe,[36]
+Client 'built by' credits,earned editorial,"Client must know; nofollow or domain-name anchor; better: a mention on the client's about/case page",nofollow if sitewide,n/a,"ENT, RT",L,H if keyword anchor / sitewide / contract-required,[G],yes,no,no,maybe,[37][1]
+Editorial guest posts,earned editorial,"Write for the real audience; links nofollow per Mueller 2020",nofollow,n/a,"AI, ENT, RT; not LE",H,H if done for links,[WARNED][G],maybe,maybe,maybe,maybe,[38][39]
+Wikipedia,reference,"Only with significant independent coverage; never write about yourself; AfC + COI disclosure",nofollow (all Wikimedia wikis since 2007),n/a,"ENT, AI",H,H (deletion, COI flags),[G],not now,not now,not now,not now,[40]
+Wikidata,reference,"Only once serious public references exist; COI disclosed",nofollow,n/a,ENT (Knowledge Graph use [CLAIM]),M,M (thin self-sourced items),[G],later,later,later,later,[41]
+NEVER: '300+ high-DA profile sites' lists,spam,"Mostly nofollow; 'profiles that look like advertisements' are a manual-action example",n/a,n/a,none,n/a,penalty,[WARNED][G],no,no,no,no,[5]
+NEVER: Web 2.0 blogs,spam,Thin sites built for links = link scheme,n/a,n/a,none,n/a,penalty,[WARNED],no,no,no,no,[13][1]
+NEVER: social bookmarking / PDF-sharing blasts,spam,"'Low-quality directory or bookmark site links'; automated link creation",n/a,n/a,none,n/a,penalty,[WARNED][G],no,no,no,no,[1]
+NEVER: forum signatures / blog comments / edu-gov comment spam,spam,"'Forum comments with optimized links'; user-generated spam",n/a,n/a,none,n/a,penalty,[WARNED][G],no,no,no,no,[1][5][36]
+NEVER: 'DA 90+ backlink lists' / Fiverr high-DR gigs,spam,"Buying links; SpamBrain targets buyers and sellers; DA/DR are not Google metrics",n/a,n/a,none,n/a,penalty,[WARNED][G],no,no,no,no,[1][4][42]
+NEVER: paid 'dofollow' launch listings (DevHunt paid / Toolify / TAAFT paid),spam,Paying for ranking-credit links = buying links unless marked sponsored,n/a,n/a,none,n/a,penalty,[WARNED][G],no,no,no,no,[1][10][21]
+NEVER: 'free listing if you show our badge',spam,Link exchange; nofollow the badge if shown,n/a,n/a,none,n/a,penalty,[WARNED][G],no,no,no,no,[1][21]
+NEVER: contract-required footer credits / keyword anchors / sitewide credits,spam,"'Requiring a link as part of a contract'; 'widely distributed links in footers'",n/a,n/a,none,n/a,penalty,[WARNED][G],no,no,no,no,[1][37]
+NEVER: guest-post networks / 'guest posting services',spam,Optimized anchors in guest posts; Google 2017 warning signs,n/a,n/a,none,n/a,penalty,[WARNED][G],no,no,no,no,[1][38][39]
+NEVER: review or testimonial only in exchange for a followed link,spam,"'Sending someone a product in exchange for them writing about it and including a link'",n/a,n/a,none,n/a,penalty,[WARNED][G],no,no,no,no,[1]

@@ -1,0 +1,20 @@
+{
+  "name": "mt7-seo-king",
+  "owner": {
+    "name": "Mt7",
+    "url": "https://github.com/abduladnan-mt7"
+  },
+  "metadata": {
+    "description": "Mt7 SEO King - an evidence-tiered SEO skill for Claude Code.",
+    "version": "1.0.0",
+    "repository": "https://github.com/abduladnan-mt7/Mt7-Seo-king"
+  },
+  "plugins": [
+    {
+      "name": "mt7-seo-king",
+      "source": "./",
+      "description": "Evidence-tiered SEO for any website: audits, traffic-drop diagnosis, gated page templates, free link building, AI-search visibility, and zero-dependency Node scripts. No paid APIs.",
+      "category": "marketing"
+    }
+  ]
+}

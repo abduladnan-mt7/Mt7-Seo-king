@@ -1,0 +1,10 @@
+query,intent,serp_format_seen,serp_checked_on,page_type,target_url,status,priority,gsc_impressions_28d,gsc_position,evidence_notes
+"<service> company in <city>",commercial,"agency landing pages + directory city pages + map pack",2026-10-20,service or city page,/services/<slug>,planned,P1,0,,"[DATA] business sites own 61% of transactional SERPs; directories hold 31% of local-intent top-10s (BrightLocal 2024-10)"
+"best <service> company in <city>",commercial,"directories (Clutch/GoodFirms/Justdial) + listicles",2026-10-20,none - pitch lists,n/a,skip,P3,0,,"[DATA] 'best X' = 68% directories; [WARNED] self-ranking listicle; action = outreach-kit.md"
+"<service> cost in <country>",commercial,"vendor pricing pages + guides + PAA",2026-10-20,guide / pricing page,/guides/<slug>,planned,P1,0,,"[PROVEN] bottom-of-funnel cost queries winnable for low-authority sites (references/boring-keywords-and-onpage.md section 1)"
+"<service> for <industry>",commercial,"vendor industry pages",2026-10-20,industry page,/industries/<slug>,planned,P1,0,,"[PROVEN] winnable pattern; needs an anchor case study (industry-page.md gate)"
+"<A> vs <B>",informational/commercial,"comparison articles + forums",2026-10-20,comparison page,/compare/<a-vs-b>,idea,P2,0,,"[PROVEN] winnable; must not crown yourself"
+"how to choose a <provider> in <city>",informational,"guides + listicles + PAA",2026-10-20,how-to-choose guide,/guides/<slug>,idea,P2,0,,"adjacent to 'best X' without the listicle risk"
+"<brand>",navigational,"own site + name collisions (<list them>)",2026-10-20,home,/,live,P0,0,,"[G] Organization + WebSite schema with alternateName/sameAs to disambiguate"
+"<brand> reviews",navigational,"directory profiles",2026-10-20,profiles (off-site),n/a,ongoing,P1,0,,"[DATA] reviews on GBP/Clutch/G2 are what engines cite"
+"<striking-distance query from GSC>",<fill>,<fill>,<date>,<existing page>,<url>,retitle,P1,<impr>,<pos 8-20>,"[PROVEN] retitle in the searcher's words; hold 4-8 weeks; compare"

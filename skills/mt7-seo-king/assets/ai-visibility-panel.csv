@@ -1,0 +1,8 @@
+date,prompt,engine,run_no,brand_mentioned,position_in_answer,cited_urls,competitors_named,notes
+2026-10-20,"best web development company in <city>",google-ai-mode,1,no,,"https://clutch.co/...;https://www.goodfirms.co/...","<names>","[DATA] answers vary run to run - log % of runs mentioning the brand, never a rank"
+2026-10-20,"best web development company in <city>",chatgpt,1,no,,"<urls>","<names>",
+2026-10-20,"best web development company in <city>",perplexity,1,no,,"<urls>","<names>",
+2026-10-20,"best web development company in <city>",gemini,1,no,,"<urls>","<names>",
+2026-10-20,"<service> cost in <country>",chatgpt,1,,,"<urls>","<names>","does our pricing page get quoted?"
+2026-10-20,"<brand> reviews",google-ai-mode,1,,,"<urls>","<names>","which profile does it cite: GBP / Clutch / Trustpilot?"
+2026-10-20,"who built <client project>",chatgpt,1,,,"<urls>",,"case-study attribution check"
