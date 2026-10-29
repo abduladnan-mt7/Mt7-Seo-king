@@ -1,9 +1,9 @@
 # Measuring AI-search visibility (free stack)
 
-Last verified 2026-10-20. Tags as in SKILL.md. `[DATA]` AI assistants send ~0.43% of visits vs 26.8% from search (Ahrefs 2026-10, 115K sites) - measure it, but keep it in proportion.
+Last verified 2026-10-20. Tags as in SKILL.md. `[DATA]` AI assistants send ~0.43% of visits vs 26.8% from search ([Ahrefs, 2026-10](https://ahrefs.com/benchmarks/ai-vs-search), 115K sites) - measure it, but keep it in proportion.
 
 ## 1. Monthly prompt panel (`ai-visibility-panel.csv`)
-- `[DATA]` 2,961 runs of 12 prompts produced the same brand list < 1 time in 100 (SparkToro 2026-01). Track **% of runs that mention the brand** per prompt and engine; never report a "rank".
+- `[DATA]` 2,961 runs of 12 prompts produced the same brand list < 1 time in 100 ([SparkToro, 2026-01](https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/)). Track **% of runs that mention the brand** per prompt and engine; never report a "rank".
 - Panel: ~20 prompts (category x city, category x industry, "<service> cost", "<brand> reviews", "<A> vs <B>", "who built <client>") x 4 engines (Google AI Mode, ChatGPT, Perplexity, Gemini; add Copilot if Bing matters) x 3-5 runs, in private sessions, same week each month.
 - Log cited URLs: they tell you which third-party pages (directories, lists, LinkedIn, YouTube) the engines trust for your category - that is your outreach list.
 
@@ -19,7 +19,7 @@ Admin -> Data display -> Channel groups -> create a copy of the default group ->
 ^(chat\.openai\.com|chatgpt\.com|.*\.chatgpt\.com|perplexity\.ai|www\.perplexity\.ai|gemini\.google\.com|bard\.google\.com|copilot\.microsoft\.com|claude\.ai|.*\.claude\.ai|chat\.deepseek\.com|deepseek\.com|grok\.com|x\.ai|you\.com|chat\.mistral\.ai|meta\.ai|poe\.com)$
 ```
 
-- The five hosts named in the research (chatgpt.com, perplexity.ai, gemini.google.com, copilot.microsoft.com, claude.ai) are `[DATA]`-supported; the rest are `[INFERENCE]` additions - prune to what appears in your Referral report.
+- ChatGPT, Gemini, Claude, Perplexity and Meta AI are the assistants Ahrefs' 115K-site referral benchmark tracks `[DATA]` ([Ahrefs, 2026-10](https://ahrefs.com/benchmarks/ai-vs-search)), and Copilot, Deepseek and Grok are in GA4's default AI Assistant channel `[OFFICIAL]`; the hostnames themselves and the other entries are `[INFERENCE]` - prune to what appears in your Referral report.
 - Also add the same regex as an exploration segment so historical sessions can be re-cut `[INFERENCE]`.
 - Expect small numbers; look at assisted conversions and landing pages, not sessions.
 

@@ -1,6 +1,6 @@
 # Service page brief
 
-One page per service, answering buyer questions plainly. `[PROVEN]` "dedicated page per service" is the #1 local-organic factor and #2 AI-visibility factor (Whitespark 2025-11); 57% of ChatGPT citations for "best agencies for X" went to the agency's own page when it answered the query (Onely 2026-10). `[DATA]` Business sites own 61% of transactional SERPs (BrightLocal 2024-10).
+One page per service, answering buyer questions plainly. `[PROVEN]` "dedicated page per service" is the #1 local-organic factor and #2 AI-visibility factor (Whitespark 2025-11); 57% of ChatGPT citations for "best agencies for X" went to the agency's own page when it answered the query (Onely 2026-10). `[DATA]` Business sites own 61% of transactional SERPs ([BrightLocal, 2024-10](https://www.brightlocal.com/research/business-listings-visibility-study/)).
 
 ## Gate (all must be true before writing)
 - [ ] The service is actually offered and has been delivered at least once (proof exists).
@@ -18,7 +18,7 @@ One page per service, answering buyer questions plainly. `[PROVEN]` "dedicated p
 ## Page skeleton
 1. **Answer-first opening (2-4 sentences):** what you do, for whom, with what outcome, and how engagements start. Plain HTML, no hero-only JS. `[G]` passage ranking needs nothing special; `[CLAIM]` AI crawlers read HTML, not JS.
 2. **Who it is for / not for:** honest fit criteria (cuts bad leads, reads as expertise).
-3. **What is included:** deliverables, stack/tools, timeline range, how it is priced (real ranges in text - quotable `[DATA]` AI citation behaviour).
+3. **What is included:** deliverables, stack/tools, timeline range, how it is priced (real ranges in text - quotable `[DATA]` AI citation behaviour: [Ahrefs, 2025-12](https://ahrefs.com/blog/ai-vs-made-up-brand-experiment/)).
 4. **Proof:** 1-3 case studies with measured outcomes, linked (`case-study.md`); named clients only with permission; real screenshots.
 5. **Process:** the steps a buyer experiences, dated/durations where true.
 6. **Buyer questions answered in prose** (the questions you hear on sales calls - cost, timeline, ownership, maintenance, what happens if...). No FAQ schema needed `[G]`.

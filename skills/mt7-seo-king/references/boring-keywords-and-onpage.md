@@ -16,7 +16,7 @@ Last verified 2026-10-20. Tags: `[G]` Google docs or staff; `[DATA]` study with 
 - `[G]` Bing Webmaster Tools keyword research is free and uses Bing organic data (UI may have changed). [Bing, 2012-03](https://blogs.bing.com/webmaster/March-2012/4-things-you-may-not-know-about-Bing-Webmaster-too)
 - `[PROVEN]` Other sources: People Also Ask, autocomplete, forums, sales calls, customer emails, support tickets.
 - `[PROVEN]` Signs of a weak (winnable) SERP: forum/UGC/Q&A pages ranking, outdated results, mismatched intent, thin directories, low-referring-domain pages in the top 10.
-- `[DATA]` ~46.77% of GSC clicks come from anonymized queries, worse on small sites - the visible query list understates demand (keyword-and-ranking.md section 9).
+- `[DATA]` ~46.77% of GSC clicks come from anonymized queries, worse on small sites - the visible query list understates demand ([Ahrefs, 2026-02](https://ahrefs.com/blog/gsc-anonymized-queries/); keyword-and-ranking.md section 9).
 
 ## 3. On-page tactics with evidence
 
@@ -52,12 +52,12 @@ Last verified 2026-10-20. Tags: `[G]` Google docs or staff; `[DATA]` study with 
 3. Mine sales calls, emails, PAA, autocomplete and forums for cost / vs / alternatives / "for [industry]" / integration / error queries. `[PROVEN]`
 4. Check each SERP by hand: forums, stale pages, off-intent results = winnable. `[PROVEN]`
 5. One query cluster -> one page; merge only true duplicates. `[G]`
-6. Match the SERP format (comparison table, price range, steps). `[DATA]` intent studies
+6. Match the SERP format (comparison table, price range, steps). `[DATA]` intent studies ([BrightLocal, 2024-10](https://www.brightlocal.com/research/business-listings-visibility-study/))
 7. Answer in the first passage, then first-hand detail (real prices, screenshots, process). `[G]` `[CLAIM]`
-8. Title in the searcher's words, brand at the end. `[G]` `[DATA]`
-9. Internal links from the strongest pages, varied descriptive anchors. `[DATA]` `[G]`
+8. Title in the searcher's words, brand at the end. `[G]` `[DATA]` ([SearchPilot, 2025-09](https://www.searchpilot.com/resources/case-studies/expanding-your-title-tag-testing-strategy))
+9. Internal links from the strongest pages, varied descriptive anchors. `[DATA]` ([SearchPilot, 2020-08](https://www.searchpilot.com/resources/case-studies/seo-split-test-lessons-increasing-internal-linking)) `[G]`
 10. Ship; hold 4-8 weeks; compare in GSC. `[INFERENCE]` on the window; `[G]` on patience
-11. Substantive refresh at ~6 months if not in the top 10. `[DATA]`
+11. Substantive refresh at ~6 months if not in the top 10. `[DATA]` ([Ahrefs, 2025-05](https://ahrefs.com/blog/how-long-does-it-take-to-rank/))
 12. One free tool or original-data page per cluster as the linkable asset. `[CLAIM]`
 
 ## 7. Myths
@@ -66,6 +66,6 @@ Last verified 2026-10-20. Tags: `[G]` Google docs or staff; `[DATA]` study with 
 - Delete old content to rank ("not a thing"). `[G]`
 - Bump the date (a warning sign). `[G]`
 - Cannibalization is always bad (not per Mueller, 2025). `[G]`
-- Links don't matter (zero-link pages rarely get traffic). `[DATA]`
+- Links don't matter (zero-link pages rarely get traffic). `[DATA]` ([Ahrefs, 2023-12](https://ahrefs.com/blog/search-traffic-study/))
 - AI Overviews need llms.txt or special schema (no). `[G]`
 - FAQ schema earns rich results (gone 2026-05). `[G]`

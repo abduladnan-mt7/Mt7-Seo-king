@@ -1,6 +1,6 @@
 # Comparison page brief ("<A> vs <B>", "<X> alternatives", "<option 1> or <option 2>?")
 
-`[PROVEN]` "[A] vs [B]" and "[tool] alternatives" are winnable bottom-of-funnel patterns. `[DATA]` "best X" lists are 43.8% of ChatGPT-cited page types (Ahrefs 2025-12) - but `[WARNED]` self-ranking listicles were tied to 29-49% visibility drops and AI Overviews omitted self-crowning publishers 83% of the time (contested). The line: compare honestly, name real alternatives, never crown yourself.
+`[PROVEN]` "[A] vs [B]" and "[tool] alternatives" are winnable bottom-of-funnel patterns. `[DATA]` "best X" lists are 43.8% of ChatGPT-cited page types ([Ahrefs, 2025-12](https://ahrefs.com/blog/best-lists-research/)) - but `[WARNED]` self-ranking listicles were tied to 29-49% visibility drops and AI Overviews omitted self-crowning publishers 83% of the time (contested). The line: compare honestly, name real alternatives, never crown yourself.
 
 ## Gate
 - [ ] You have first-hand experience with every option compared (used it, built with it, migrated from it).

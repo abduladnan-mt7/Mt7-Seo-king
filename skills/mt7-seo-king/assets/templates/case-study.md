@@ -1,6 +1,6 @@
 # Case study brief
 
-Case studies are the proof layer every other page links to and the only honest source of "results" claims. `[CLAIM]` Portfolio/case pages bring leads (vendor-reported); `[DATA]` Zyppy: "proprietary assets" r = 0.36 with winning. `[G]` Original reporting and first-hand expertise are what raters are told to reward.
+Case studies are the proof layer every other page links to and the only honest source of "results" claims. `[CLAIM]` Portfolio/case pages bring leads (vendor-reported); `[DATA]` Zyppy, 400+ sites: "proprietary assets" r = 0.36 with winning ([Zyppy, 2026-04](https://signal.zyppy.com/p/winning-google)). `[G]` Original reporting and first-hand expertise are what raters are told to reward.
 
 ## Gate
 - [ ] Client permission to publish name, screenshots and numbers (written, on file). If not, anonymise honestly ("a 40-room resort in Karnataka") and say so.
@@ -17,7 +17,7 @@ Case studies are the proof layer every other page links to and the only honest s
 2. **Context:** who the client is, what they had before, why it mattered.
 3. **Difficulty:** the hard part, technically or commercially - specific.
 4. **What we did:** decisions and trade-offs, in first person; named people who did the work.
-5. **Result:** measured, dated, with the evidence embedded (screenshot of the report, chart from real data). Performance scores are UX/conversion proof, not an SEO claim `[DATA]` (speed ~ zero correlation with rankings).
+5. **Result:** measured, dated, with the evidence embedded (screenshot of the report, chart from real data). Performance scores are UX/conversion proof, not an SEO claim `[DATA]` (speed ~ zero correlation with rankings: [Backlinko, 2025-04](https://backlinko.com/search-engine-ranking)).
 6. **Client quote** (real, attributed, with permission).
 7. **What we would do differently** (credibility).
 8. **Links:** to the service page and industry page with descriptive anchors `[G]`; CTA.

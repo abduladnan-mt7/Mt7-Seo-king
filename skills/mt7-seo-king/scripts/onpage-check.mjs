@@ -119,6 +119,33 @@ function jsonLd(html) {
   return { blocks: n, top: topU, nested: uniq(all).filter((t) => !topU.includes(t)), errors };
 }
 
+// Robots directives that apply to Google from an X-Robots-Tag value: bare directives apply to
+// every crawler, "googlebot: noindex" to Google, "otherbot: noindex" to someone else.
+function xRobotsForGoogle(value) {
+  const out = [];
+  let agent = null;
+  for (const part0 of String(value || '').split(',')) {
+    const part = part0.trim();
+    const m = /^([a-z0-9_-]+)\s*:\s*(.*)$/i.exec(part);
+    let directive = part;
+    if (m && !/^(max-snippet|max-image-preview|max-video-preview|unavailable_after)$/i.test(m[1])) { agent = m[1].toLowerCase(); directive = m[2]; }
+    if (directive && (agent === null || agent === 'googlebot')) out.push(directive.trim().toLowerCase());
+  }
+  return out;
+}
+
+// Where the parsed <head> really ends: </head>, <body>, or the first element not allowed in <head>
+// (a div, img, iframe...), which closes it in browsers and in Google's renderer.
+function headCut(html) {
+  const blank = (m) => ' '.repeat(m.length);
+  const s = html.replace(/<!--[\s\S]*?-->/g, blank).replace(/<(script|style|noscript|template|title)\b[\s\S]*?<\/\1\s*>/gi, blank);
+  const ok = new Set(['html', 'head', 'base', 'basefont', 'bgsound', 'link', 'meta', 'title', 'noscript', 'noframes', 'style', 'script', 'template']);
+  const re = /<\/head\s*>|<body\b|<([a-z][a-z0-9-]*)\b/gi;
+  let m;
+  while ((m = re.exec(s))) if (!m[1] || !ok.has(m[1].toLowerCase())) return m.index;
+  return s.length;
+}
+
 async function fetchChain(startUrl, opts) {
   const chain = [];
   let current = startUrl;
@@ -180,7 +207,8 @@ function analyse({ chain, res, html, finalUrl }) {
 
   // Title (prefer <head>, so inline-SVG <title> elements in the body are not mistaken for it)
   const head = (html.match(/<head\b[\s\S]*?<\/head\s*>/i) || [''])[0];
-  const tm = (head || html).match(/<title[^>]*>([\s\S]*?)<\/title\s*>/i) || html.match(/<title[^>]*>([\s\S]*?)<\/title\s*>/i);
+  const noSvg = (s) => s.replace(/<svg\b[\s\S]*?<\/svg\s*>/gi, ' ');
+  const tm = noSvg(head).match(/<title[^>]*>([\s\S]*?)<\/title\s*>/i) || noSvg(html).match(/<title[^>]*>([\s\S]*?)<\/title\s*>/i);
   const title = tm ? clean(tm[1]) : '';
   out.title = title;
   if (!title) row('Title', 'FAIL', 'missing');
@@ -206,7 +234,11 @@ function analyse({ chain, res, html, finalUrl }) {
   const canon = links.filter((l) => (l.rel || '').toLowerCase().split(/\s+/).includes('canonical')).map((l) => l.href).filter(Boolean);
   out.canonical = canon;
   const norm = (u) => { try { const x = new URL(u, finalUrl); x.hash = ''; return x.href; } catch { return u; } };
+  // Google accepts rel=canonical only inside <head>; one written after an element that ends <head> is ignored.
+  const cut = headCut(html);
+  const canonInHead = [...html.matchAll(/<link\b[^>]*>/gi)].filter((m) => (parseAttrs(m[0].slice(5, -1)).rel || '').toLowerCase().split(/\s+/).includes('canonical') && m.index < cut).length;
   if (canon.length === 0) row('Canonical', 'WARN', 'missing (add a self-referencing canonical)');
+  else if (!canonInHead) row('Canonical', 'FAIL', `${canon[0]} sits outside <head> (after an element that ends it, or in <body>), so Google ignores it`);
   else if (canon.length > 1) row('Canonical', 'FAIL', `${canon.length} canonical tags: ${canon.join(' | ')} (conflicting signals)`);
   else if (norm(canon[0]) === norm(finalUrl)) row('Canonical', 'PASS', `${canon[0]} (self-referencing)`);
   else row('Canonical', 'WARN', `${canon[0]} differs from final URL ${finalUrl} (intentional? check host/trailing slash)`);
@@ -215,23 +247,28 @@ function analyse({ chain, res, html, finalUrl }) {
   const robots = [...metaContent(metas, 'name', 'robots'), ...metaContent(metas, 'name', 'googlebot')];
   const robotsJoined = robots.join(', ').toLowerCase();
   out.metaRobots = robots;
-  if (!robots.length) row('Robots meta', 'PASS', 'none (indexable by default)');
-  else if (/noindex/.test(robotsJoined)) row('Robots meta', 'FAIL', `noindex present: ${robots.join(' | ')}`);
-  else if (/nofollow/.test(robotsJoined)) row('Robots meta', 'WARN', `nofollow present: ${robots.join(' | ')}`);
+  // Compare whole directives: "none" means noindex + nofollow, while "max-image-preview:none" is not noindex.
+  const tokens = robotsJoined.split(',').map((t) => t.trim()).filter(Boolean);
+  const hasTok = (t) => tokens.includes(t);
+  if (!robots.length) row('Robots meta', 'PASS', 'not set (indexable by default)');
+  else if (hasTok('noindex') || hasTok('none')) row('Robots meta', 'FAIL', `noindex present${hasTok('none') ? ' ("none" = noindex, nofollow)' : ''}: ${robots.join(' | ')}`);
+  else if (hasTok('nofollow')) row('Robots meta', 'WARN', `nofollow present: ${robots.join(' | ')}`);
+  else if (hasTok('nosnippet') || tokens.some((t) => /^max-snippet\s*:\s*0$/.test(t))) row('Robots meta', 'WARN', `nosnippet present (no text snippet in results or AI features): ${robots.join(' | ')}`);
   else row('Robots meta', 'PASS', robots.join(' | '));
   row('max-image-preview', /max-image-preview:\s*large/.test(robotsJoined) ? 'PASS' : 'INFO', /max-image-preview:\s*large/.test(robotsJoined) ? 'large (Discover/large previews allowed)' : 'not set to large (matters for Discover and image previews)');
   const xr = res.headers.get('x-robots-tag') || '';
   out.xRobotsTag = xr || null;
+  const xg = xRobotsForGoogle(xr);
   if (!xr) row('X-Robots-Tag', 'PASS', 'none');
-  else if (/noindex/i.test(xr)) row('X-Robots-Tag', 'FAIL', `noindex in header: ${xr}`);
-  else row('X-Robots-Tag', 'INFO', xr);
+  else if (xg.includes('noindex') || xg.includes('none')) row('X-Robots-Tag', 'FAIL', `noindex in header: ${xr}`);
+  else row('X-Robots-Tag', 'INFO', `${xr}${/noindex|none/i.test(xr) ? ' (applies to another crawler, not Googlebot)' : ''}`);
 
   // H1
   const h1s = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1\s*>/gi)].map((m) => clean(m[1].replace(/<[^>]+>/g, ' ')));
   out.h1 = h1s;
   if (h1s.length === 0) row('H1', 'WARN', 'no h1 found');
   else if (h1s.length === 1) row('H1', 'PASS', `1: "${h1s[0].slice(0, 90)}"`);
-  else row('H1', 'WARN', `${h1s.length} h1 tags: ${h1s.map((h) => `"${h.slice(0, 40)}"`).join(', ')}`);
+  else row('H1', 'INFO', `${h1s.length} h1 tags (allowed in HTML; not a Google problem): ${h1s.map((h) => `"${h.slice(0, 40)}"`).join(', ')}`);
 
   // JSON-LD
   const ld = jsonLd(html);

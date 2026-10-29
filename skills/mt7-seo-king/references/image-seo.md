@@ -32,7 +32,7 @@ Source: [Google Images SEO, 2026-03](https://developers.google.com/search/docs/a
 
 ## 4. Discover, Open Graph, AI answers
 
-- `[G]` Discover wants images >= 1200 px wide, > 300K pixels, 16:9; `max-image-preview:large` (or AMP); avoid logos and text-heavy images; treat Discover as supplemental traffic. [Discover, 2026-03](https://developers.google.com/search/docs/appearance/google-discover) `[DATA]` (self-reported) large previews: +30% CTR / +332% clicks over 6 months for one publisher, +79% CTR for a food blog. [Google case study, 2021-08](https://developers.google.com/search/case-studies/large-images-case-study)
+- `[G]` Discover wants images >= 1200 px wide, > 300K pixels, 16:9; `max-image-preview:large` (or AMP); avoid logos and text-heavy images; treat Discover as supplemental traffic. [Discover, 2026-03](https://developers.google.com/search/docs/appearance/google-discover) `[CLAIM]` (self-reported by two publishers) large previews: +30% CTR / +332% clicks over 6 months for one publisher, +79% CTR for a food blog. [Google case study, 2021-08](https://developers.google.com/search/case-studies/large-images-case-study)
 - `[G]` AI Overviews / AI Mode: "no additional requirements... nor other special optimizations"; support text "with high-quality images". [AI features](https://developers.google.com/search/docs/appearance/ai-features) Related-article links in AI Mode are gaining "image thumbnails". [Google, 2026-10](https://blog.google/products-and-platforms/products/search/updates-ai-mode-overviews-explore-web/) `[CLAIM]` Thumbnails likely use the preferred-image signals above.
 - `[INFERENCE]` Two images per page serve two audiences: an OG text card for social shares and a real 16:9 photo as `primaryImageOfPage` for Search/Discover. If you can only have one, make `og:image` a real photo.
 
@@ -61,7 +61,7 @@ Source: [Next.js Image, 2026-09](https://nextjs.org/docs/app/api-reference/compo
 10. `max-image-preview:large` site-wide. `[G]`
 11. A preferred image per page: 16:9, >= 1200 px, no text/logo (`primaryImageOfPage` or `og:image`). `[G]`
 12. OG text cards for social; a real photo for Search. `[INFERENCE]`
-13. Original screenshots/photos on case studies, reviews and team pages. `[G]` preference, `[DATA]` small
+13. Original screenshots/photos on case studies, reviews and team pages. `[G]` preference, `[CLAIM]` 10-site test ([Plagiarism Today, 2019-10](https://www.plagiarismtoday.com/2019/10/22/duplicate-images-and-google/))
 14. Image sitemap (`image:loc` only) for images not discoverable by crawl. `[G]`
 15. Crawlable image paths; CDN domain verified in GSC. `[G]`
 16. Inline SVG labelled with `<title>`. `[G]`

@@ -1,15 +1,15 @@
 # Outreach kit - earned lists, digital PR, journalist sources
 
-Last verified 2026-10-20. Why this exists: `[DATA]` "best X" lists are 43.8% of ChatGPT-cited page types; for agency prompts, lists were 48-77% of citations across engines; `[PROVEN]` "expert-curated best-of lists" is Whitespark's #1 AI-visibility factor; `[DATA]` branded web mentions (0.66) and YouTube mentions (0.74) correlate with AI visibility far above backlinks (0.22-0.27). `[WARNED]` Publishing your own ranked list is risky; `[G]` buying placements without disclosure is link spam.
+Last verified 2026-10-20. Why this exists: `[DATA]` "best X" lists are 43.8% of ChatGPT-cited page types ([Ahrefs, 2025-12](https://ahrefs.com/blog/best-lists-research/)); for agency prompts, lists were 48-77% of citations across engines ([Onely, 2026-10](https://www.onely.com/blog/how-chatgpt-decides-which-brands-to-recommend/), 31 prompts); `[PROVEN]` "expert-curated best-of lists" is Whitespark's #1 AI-visibility factor; `[DATA]` branded web mentions (0.66) and YouTube mentions (0.74) correlate with AI visibility far above backlinks (0.22-0.27) ([Ahrefs, 2025-05](https://ahrefs.com/blog/ai-overview-brand-correlation/); [Ahrefs, 2025-12](https://ahrefs.com/blog/ai-brand-visibility-correlations/)). `[WARNED]` Publishing your own ranked list is risky; `[G]` buying placements without disclosure is link spam.
 
 ## Rules
 1. Pitch with **specifics the editor can verify**: measured results, named clients (with permission), dates, screenshots. Vague "we are a leading agency" mails are deleted.
 2. **Paid placement = `rel="sponsored"` + visible disclosure** on the host page `[G]`. If the publisher won't mark it, don't buy it. Never pay for "followed" links or list positions sold as editorial.
 3. Ask for a **brand-name anchor** or a plain URL; never request keyword anchors `[WARNED]` exact-anchor links.
-4. Accept **nofollow / mention-only** gladly - nofollow is a hint `[G]`, and mentions are what AI engines correlate with `[DATA]`.
+4. Accept **nofollow / mention-only** gladly - nofollow is a hint `[G]`, and mentions are what AI engines correlate with `[DATA]` ([Ahrefs, 2025-05](https://ahrefs.com/blog/ai-overview-brand-correlation/)).
 5. Keep a log: date, outlet, contact, status, URL, link attribute.
 6. Never seed Reddit/forums with disguised promotion `[WARNED]`; participate as yourself where you have real expertise, disclosed.
-7. One real asset per quarter beats weekly pitches: original data, a free tool, a measured case `[DATA]` research-backed content earns more links.
+7. One real asset per quarter beats weekly pitches: original data, a free tool, a measured case `[DATA]` research-backed content earns more links ([BuzzSumo/Moz via Contently, 2015](https://contently.com/2015/09/16/5-ways-content-goes-viral/)).
 
 ## A. Inclusion in a third-party "best / top X in <city/country>" list
 
@@ -64,8 +64,8 @@ Decline questions outside your experience; invented expertise is both `[G]` dece
 
 ## D. Founder-led mentions you control
 
-- LinkedIn long-form (500-2,000 words) under the founder's name: `[DATA]` Pulse long-form is 50-66% of cited LinkedIn content and individuals are cited more than company pages (Semrush 2026-03). One per month on something first-hand.
-- YouTube: a demo or walkthrough per core service with the brand name in the title; `[DATA]` YouTube mentions ~0.737 correlation with AI visibility (Ahrefs 2025-12).
+- LinkedIn long-form (500-2,000 words) under the founder's name: `[DATA]` Pulse long-form is 50-66% of cited LinkedIn content and individuals are cited more than company pages ([Semrush, 2026-03](https://www.semrush.com/blog/linkedin-ai-visibility-study/)). One per month on something first-hand.
+- YouTube: a demo or walkthrough per core service with the brand name in the title; `[DATA]` YouTube mentions ~0.737 correlation with AI visibility ([Ahrefs, 2025-12](https://ahrefs.com/blog/ai-brand-visibility-correlations/)).
 - Talks, podcasts, open-source READMEs, community directories where you genuinely belong - each is a mention with a verifiable byline.
 
 ## E. Client credit links (if you build things for clients)

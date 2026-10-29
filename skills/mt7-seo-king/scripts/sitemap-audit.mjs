@@ -3,10 +3,12 @@
  * sitemap-audit.mjs - verify what a sitemap actually lists before making claims about it.
  * Node 18+, no dependencies.
  *
- * Finds the sitemap (robots.txt "Sitemap:" lines, else /sitemap.xml; sitemap indexes and .gz
- * are followed), then fetches each listed URL WITHOUT following redirects and reports:
+ * Finds the sitemap (robots.txt "Sitemap:" lines, else /sitemap.xml; sitemap indexes, .gz and plain-text
+ * sitemaps are followed; files over Google's 50 MB limit are reported, not downloaded in full), then
+ * fetches each listed URL WITHOUT following redirects (robots.txt is obeyed for this tool) and reports:
  *   - URLs that are not 200 (a redirect, 4xx or 5xx in a sitemap is the finding itself)
- *   - URLs that are noindexed (X-Robots-Tag header or meta robots/googlebot) - verified, not assumed
+ *   - URLs robots.txt disallows for Googlebot (listed but uncrawlable)
+ *   - URLs that are noindexed (X-Robots-Tag header or meta robots/googlebot, "none" included) - verified
  *   - URLs whose canonical points elsewhere
  *   - exact-duplicate titles/descriptions and near-duplicate (templated) descriptions
  *   - orphans: listed URLs no other audited page links to (only when every URL was audited)
@@ -29,8 +31,11 @@
 
 import { gunzipSync } from 'node:zlib';
 import { readFileSync, writeFileSync } from 'node:fs';
+import { parseRobots, rulesFor, isAllowed } from './lib/robots.mjs';
+import { parseSitemap, SITEMAP_MAX_BYTES } from './lib/sitemaps.mjs';
 
 const DEFAULT_UA = 'Mozilla/5.0 (compatible; sitemap-audit/1.0; mt7-seo-king; Node fetch)';
+const OUR_TOKENS = ['mt7-seo-king'];
 
 function parseArgs(argv) {
   const opts = { target: null, limit: 200, repeat: 1, concurrency: 3, delay: 250, timeout: 15000, ua: DEFAULT_UA, json: false, save: null, compare: null, help: false };
@@ -77,29 +82,57 @@ function normalise(u, base) {
   } catch { return null; }
 }
 
-async function get(url, opts, redirect = 'manual') {
+// maxBytes: stop reading past this many (decompressed) bytes and report tooLarge instead.
+async function get(url, opts, redirect = 'manual', { maxBytes = 0 } = {}) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), opts.timeout);
   try {
     const res = await fetch(url, { redirect, signal: ctrl.signal, headers: { 'user-agent': opts.ua, accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' } });
-    const buf = Buffer.from(await res.arrayBuffer());
-    return { res, buf };
+    if (!maxBytes || !res.body) return { res, buf: Buffer.from(await res.arrayBuffer()) };
+    const declared = Number(res.headers.get('content-length'));
+    // Without content-encoding, Content-Length is the real size: an oversize file is judged without downloading it.
+    if (!res.headers.get('content-encoding') && Number.isFinite(declared) && declared > maxBytes) { try { await res.body.cancel(); } catch { /* closed */ } return { res, buf: Buffer.alloc(0), tooLarge: declared }; }
+    const reader = res.body.getReader();
+    const chunks = [];
+    let n = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      n += value.length;
+      if (n > maxBytes) { try { await reader.cancel(); } catch { /* closed */ } return { res, buf: Buffer.alloc(0), tooLarge: n }; }
+      chunks.push(value);
+    }
+    return { res, buf: Buffer.concat(chunks) };
   } finally { clearTimeout(timer); }
+}
+
+// ---- robots.txt (obeyed for this tool; Googlebot's verdict reported) ----
+
+const robotsCache = new Map();
+function robotsFor(origin, opts) {
+  if (!robotsCache.has(origin)) robotsCache.set(origin, (async () => {
+    try {
+      const { res, buf } = await get(`${origin}/robots.txt`, opts, 'follow');
+      if (res.ok) { const parsed = parseRobots(buf.toString('utf8')); return { state: 'ok', parsed, url: res.url, us: rulesFor(parsed, OUR_TOKENS), google: rulesFor(parsed, ['googlebot']) }; }
+      // 4xx = no rules; 5xx/429 = Google stops crawling the site, so this tool does not crawl it either.
+      return { state: res.status === 429 || res.status >= 500 ? 'unavailable' : 'none', status: res.status };
+    } catch (e) { return { state: 'unavailable', status: e.name === 'AbortError' ? 'timeout' : e.message }; }
+  })());
+  return robotsCache.get(origin);
 }
 
 // ---- sitemap discovery and parsing ----
 
 async function discover(target, opts) {
   const u = new URL(target);
-  if (/\.xml(\.gz)?$/i.test(u.pathname)) return { sitemaps: [u.href], via: 'argument' };
-  const robotsUrl = `${u.origin}/robots.txt`;
-  try {
-    const { res, buf } = await get(robotsUrl, opts, 'follow');
-    if (res.ok) {
-      const found = [...buf.toString('utf8').matchAll(/^\s*sitemap:\s*(\S+)/gim)].map((m) => m[1]);
-      if (found.length) return { sitemaps: found, via: 'robots.txt' };
-    }
-  } catch { /* fall through to the default location */ }
+  if (/\.(xml|txt)(\.gz)?$/i.test(u.pathname)) return { sitemaps: [u.href], via: 'argument' };
+  const rob = await robotsFor(u.origin, opts);
+  if (rob.state === 'ok' && rob.parsed.sitemaps.length) {
+    // Sitemap lines should be absolute; resolve a relative one against robots.txt rather than dropping it.
+    const list = rob.parsed.sitemaps.map((s) => { try { return new URL(s.value, rob.url || `${u.origin}/robots.txt`).href; } catch { return null; } }).filter(Boolean);
+    const relative = rob.parsed.sitemaps.filter((s) => !s.absolute).map((s) => s.value);
+    return { sitemaps: list, via: 'robots.txt', relative };
+  }
   return { sitemaps: [`${u.origin}/sitemap.xml`], via: 'default /sitemap.xml (robots.txt lists none)' };
 }
 
@@ -107,30 +140,36 @@ async function readSitemaps(start, opts) {
   const urls = new Map(); // loc -> lastmod
   const seen = new Set();
   const errors = [];
+  const oversize = [];
   const queue = start.map((s) => ({ url: s, depth: 0 }));
   while (queue.length && seen.size < 50) {
     const { url, depth } = queue.shift();
     if (seen.has(url)) continue;
     seen.add(url);
-    let xml;
+    let text;
     try {
-      const { res, buf } = await get(url, opts, 'follow');
+      const o = new URL(url).origin;
+      const rob = await robotsFor(o, opts);
+      if (rob.state === 'ok' && !isAllowed(rob.us, url).allowed) { errors.push(`${url} -> not fetched: robots.txt disallows it${isAllowed(rob.google, url).allowed ? '' : ' (Googlebot too - Google respects robots.txt when fetching sitemaps)'}`); continue; }
+      const { res, buf, tooLarge } = await get(url, opts, 'follow', { maxBytes: SITEMAP_MAX_BYTES });
       if (!res.ok) { errors.push(`${url} -> HTTP ${res.status}`); continue; }
-      xml = (buf[0] === 0x1f && buf[1] === 0x8b ? gunzipSync(buf) : buf).toString('utf8');
+      if (tooLarge) { oversize.push(`${url} -> more than 50 MB (${(tooLarge / 1048576).toFixed(1)} MB${res.headers.get('content-encoding') ? ' read before stopping' : ' declared'})`); continue; }
+      let body = buf;
+      if (buf[0] === 0x1f && buf[1] === 0x8b) {
+        try { body = gunzipSync(buf, { maxOutputLength: SITEMAP_MAX_BYTES }); }
+        catch (e) { if (e.code === 'ERR_BUFFER_TOO_LARGE') { oversize.push(`${url} -> more than 50 MB after decompression`); continue; } throw e; }
+      }
+      text = body.toString('utf8');
     } catch (e) { errors.push(`${url} -> ${e.name === 'AbortError' ? 'timeout' : e.message}`); continue; }
-    if (/<sitemapindex\b/i.test(xml)) {
-      if (depth < 2) for (const m of xml.matchAll(/<sitemap\b[^>]*>[\s\S]*?<loc>([\s\S]*?)<\/loc>/gi)) queue.push({ url: clean(m[1]), depth: depth + 1 });
+    const parsed = parseSitemap(text, url);
+    if (parsed.kind === 'index') {
+      if (depth < 2) for (const c of parsed.children) queue.push({ url: c, depth: depth + 1 });
       continue;
     }
-    for (const m of xml.matchAll(/<url\b[^>]*>([\s\S]*?)<\/url>/gi)) {
-      const loc = /<loc>([\s\S]*?)<\/loc>/i.exec(m[1]);
-      if (!loc) continue;
-      const lastmod = /<lastmod>([\s\S]*?)<\/lastmod>/i.exec(m[1]);
-      const key = clean(loc[1]);
-      if (!urls.has(key)) urls.set(key, lastmod ? clean(lastmod[1]) : null);
-    }
+    if (parsed.kind === 'html' || parsed.kind === 'invalid') { errors.push(`${url} -> ${parsed.notes.join('; ')}`); continue; }
+    for (const e of parsed.entries) if (!urls.has(e.loc)) urls.set(e.loc, e.lastmod);
   }
-  return { urls, sitemapsRead: [...seen], errors };
+  return { urls, sitemapsRead: [...seen], errors, oversize };
 }
 
 // ---- per-URL checks ----
@@ -156,8 +195,31 @@ function inspectHtml(html, finalUrl) {
   };
 }
 
+// Whole directives that apply to Google: "none" = noindex + nofollow; "otherbot: noindex" in X-Robots-Tag does not apply.
+function googleDirectives(xRobots, metaRobots) {
+  const out = [];
+  let agent = null;
+  for (const part0 of String(xRobots || '').split(',')) {
+    const part = part0.trim();
+    const m = /^([a-z0-9_-]+)\s*:\s*(.*)$/i.exec(part);
+    let d = part;
+    if (m && !/^(max-snippet|max-image-preview|max-video-preview|unavailable_after)$/i.test(m[1])) { agent = m[1].toLowerCase(); d = m[2]; }
+    if (d && (agent === null || agent === 'googlebot')) out.push(d.trim().toLowerCase());
+  }
+  for (const m of metaRobots) out.push(...decode(m.slice(m.indexOf(':') + 1)).toLowerCase().split(',').map((t) => t.trim()));
+  return out;
+}
+const isNoindex = (r) => googleDirectives(r.xRobots, r.metaRobots).some((d) => d === 'noindex' || d === 'none');
+
 async function audit(url, opts) {
   const row = { url, key: normalise(url) ?? url, status: null, location: null, xRobots: null, metaRobots: [], canonical: null, title: null, description: null, links: new Set(), fetches: [], error: null };
+  let origin;
+  try { origin = new URL(url).origin; } catch { row.error = 'not a valid URL'; return row; }
+  const rob = await robotsFor(origin, opts);
+  if (rob.state === 'ok') {
+    if (!isAllowed(rob.google, url).allowed) row.googleBlocked = isAllowed(rob.google, url).rule;
+    if (!isAllowed(rob.us, url).allowed) { row.robotsSkipped = true; row.error = 'not fetched: robots.txt disallows this tool'; return row; }
+  } else if (rob.state === 'unavailable') { row.robotsSkipped = true; row.error = `not fetched: robots.txt unavailable (${rob.status})`; return row; }
   for (let i = 0; i < opts.repeat; i++) {
     try {
       const { res, buf } = await get(url, opts);
@@ -202,16 +264,17 @@ function duplicates(rows, field) {
 }
 
 // Descriptions that differ only in a word or two are one template with a noun swapped.
+// Identical descriptions are reported as duplicates already, so they are not grouped here again.
 function nearDuplicates(rows, threshold = 0.8) {
-  const items = rows.filter((r) => r.description && r.description.length > 40).map((r) => ({ url: r.url, w: words(r.description) }));
+  const items = rows.filter((r) => r.description && r.description.length > 40).map((r) => ({ url: r.url, d: r.description, w: words(r.description) }));
   const parent = items.map((_, i) => i);
   const find = (i) => (parent[i] === i ? i : (parent[i] = find(parent[i])));
   for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) {
-    if (jaccard(items[i].w, items[j].w) >= threshold) parent[find(i)] = find(j);
+    if (items[i].d !== items[j].d && jaccard(items[i].w, items[j].w) >= threshold) parent[find(i)] = find(j);
   }
   const groups = new Map();
-  items.forEach((it, i) => groups.set(find(i), [...(groups.get(find(i)) ?? []), it.url]));
-  return [...groups.values()].filter((g) => g.length > 1);
+  items.forEach((it, i) => groups.set(find(i), [...(groups.get(find(i)) ?? []), it]));
+  return [...groups.values()].filter((g) => g.length > 1 && new Set(g.map((it) => it.d)).size > 1).map((g) => g.map((it) => it.url));
 }
 
 function analyse(rows, sitemap, opts) {
@@ -224,13 +287,20 @@ function analyse(rows, sitemap, opts) {
     ['redirects (list the final URL instead)', (r) => r.status >= 300 && r.status < 400, 'WARN'],
     ['client errors (4xx) listed in the sitemap', (r) => r.status >= 400 && r.status < 500, 'FAIL'],
     ['server errors (5xx) on first fetch', (r) => r.status >= 500, 'FAIL'],
-    ['fetch failed (timeout/network)', (r) => r.status === null, 'FAIL'],
+    ['fetch failed (timeout/network)', (r) => r.status === null && !r.robotsSkipped, 'FAIL'],
   ]) {
     const hit = notOk.filter(test);
     if (hit.length) add(level, 'status', `${hit.length} ${label}`, hit.map((r) => `${r.url} -> ${r.status ?? r.error}${r.location ? ` -> ${r.location}` : ''}`));
   }
 
-  const noindex = ok.filter((r) => /noindex/i.test(r.xRobots ?? '') || r.metaRobots.some((m) => /noindex/i.test(m)));
+  for (const o of sitemap.oversize ?? []) add('FAIL', 'sitemap', 'sitemap file over Google\'s 50 MB (uncompressed) limit - Google rejects it; split it and list the parts in a sitemap index', [o]);
+  if (sitemap.relative?.length) add('WARN', 'sitemap', `robots.txt Sitemap line(s) with a relative URL (must be fully qualified): ${sitemap.relative.join(', ')}`);
+  const gBlocked = rows.filter((r) => r.googleBlocked);
+  if (gBlocked.length) add('FAIL', 'robots', `${gBlocked.length} sitemap URL(s) are disallowed for Googlebot by robots.txt (listed but uncrawlable)`, gBlocked.map((r) => `${r.url} -> ${r.googleBlocked}`));
+  const skipped = rows.filter((r) => r.robotsSkipped);
+  if (skipped.length) add('INFO', 'robots', `${skipped.length} URL(s) not fetched because robots.txt disallows this tool`, skipped.map((r) => `${r.url} -> ${r.error}`));
+
+  const noindex = ok.filter(isNoindex);
   if (noindex.length) add('FAIL', 'noindex', `${noindex.length} sitemap URL(s) are noindexed (verified on the fetched response)`, noindex.map((r) => `${r.url} -> ${[r.xRobots && `X-Robots-Tag: ${r.xRobots}`, ...r.metaRobots].filter(Boolean).join(' | ')}`));
   else add('PASS', 'noindex', `0 of ${ok.length} fetched 200 URLs carry noindex (header or meta)`);
 
@@ -287,7 +357,7 @@ function snapshot(rows) {
   for (const r of rows) {
     out[r.url] = {
       status: r.status,
-      noindex: /noindex/i.test(r.xRobots ?? '') || r.metaRobots.some((m) => /noindex/i.test(m)),
+      noindex: isNoindex(r),
       canonical: r.canonical, title: r.title, description: r.description,
     };
   }
@@ -345,10 +415,11 @@ async function main() {
   let target;
   try { target = new URL(/^https?:\/\//i.test(opts.target) ? opts.target : `https://${opts.target}`).href; } catch { console.error(`sitemap-audit: not a URL: ${opts.target}`); process.exitCode = 2; return; }
 
-  const { sitemaps, via } = await discover(target, opts);
+  const { sitemaps, via, relative = [] } = await discover(target, opts);
   const sitemap = await readSitemaps(sitemaps, opts);
+  sitemap.relative = relative;
   if (!sitemap.urls.size) {
-    console.error(`sitemap-audit: no URLs found (${[...sitemap.errors, `tried: ${sitemaps.join(', ')}`].join('; ')})`);
+    console.error(`sitemap-audit: no URLs found (${[...sitemap.oversize, ...sitemap.errors, `tried: ${sitemaps.join(', ')}`].join('; ')})`);
     process.exitCode = 2;
     return;
   }

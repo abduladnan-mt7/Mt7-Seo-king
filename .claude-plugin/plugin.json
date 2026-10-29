@@ -1,7 +1,7 @@
 {
   "name": "mt7-seo-king",
   "version": "1.0.0",
-  "description": "Evidence-tiered SEO for any website: Google's docs first, data studies second, community tactics only when proven. Audits, traffic-drop diagnosis, page templates with legitimacy gates, free link building, AI-search visibility, and four zero-dependency Node scripts. No paid APIs.",
+  "description": "Evidence-tiered SEO for any website: Google's docs first, data studies second, community tactics only when proven. Audits, traffic-drop diagnosis, page templates with legitimacy gates, free link building, AI-search visibility, and five zero-dependency Node scripts, including a deep site-diagnose crawl. No paid APIs required; optional OpenSEO data.",
   "author": {
     "name": "Mt7",
     "url": "https://github.com/abduladnan-mt7"

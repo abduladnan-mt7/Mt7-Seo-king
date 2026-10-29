@@ -4,7 +4,8 @@
  *
  * For each source page: fetches the raw HTML and reports every <a href> pointing at your domain with
  * its anchor text and rel (nofollow / sponsored / ugc), plus whether the page itself can pass anything:
- * HTTP status, noindex (header or meta), canonical pointing elsewhere, and robots.txt blocking Googlebot.
+ * HTTP status, noindex and page-level nofollow (header or meta, "none" included), canonical pointing
+ * elsewhere, and robots.txt blocking Googlebot (Google's matching rules, via lib/robots.mjs).
  * Use it to track outreach (did they add the link?) and to settle "unverified" link attributes in
  * references/free-link-sources.md before relying on them.
  *
@@ -15,10 +16,11 @@
  *
  * Exit codes: 0 = ran, 1 = at least one source has no link to you, 2 = bad arguments.
  * Limits: raw HTML only - a link injected by JavaScript shows as "not found" (re-check in a browser
- * before chasing the site owner); robots.txt matching is the simple prefix/wildcard subset.
+ * before chasing the site owner).
  */
 
 import { readFileSync } from 'node:fs';
+import { parseRobots, rulesFor, isAllowed } from './lib/robots.mjs';
 
 const DEFAULT_UA = 'Mozilla/5.0 (compatible; link-check/1.0; mt7-seo-king; Node fetch)';
 
@@ -61,29 +63,19 @@ async function get(url, opts) {
   } finally { clearTimeout(timer); }
 }
 
-// Googlebot's group if one exists, else '*'; longest matching rule wins, Allow wins a tie.
-function robotsBlocks(robotsTxt, path) {
-  const groups = [];
-  let cur = null;
-  for (const raw of robotsTxt.split(/\r?\n/)) {
-    const line = raw.replace(/#.*/, '').trim();
-    const m = /^([a-z-]+)\s*:\s*(.*)$/i.exec(line);
-    if (!m) continue;
-    const [k, v] = [m[1].toLowerCase(), m[2].trim()];
-    if (k === 'user-agent') {
-      if (!cur || cur.rules.length) groups.push((cur = { agents: [], rules: [] }));
-      cur.agents.push(v.toLowerCase());
-    } else if ((k === 'allow' || k === 'disallow') && cur) cur.rules.push({ allow: k === 'allow', path: v });
+// Robots directives that apply to Google from an X-Robots-Tag value: bare directives apply to every
+// crawler, "googlebot: noindex" to Google, "otherbot: noindex" to someone else.
+function xRobotsForGoogle(value) {
+  const out = [];
+  let agent = null;
+  for (const part0 of String(value || '').split(',')) {
+    const part = part0.trim();
+    const m = /^([a-z0-9_-]+)\s*:\s*(.*)$/i.exec(part);
+    let directive = part;
+    if (m && !/^(max-snippet|max-image-preview|max-video-preview|unavailable_after)$/i.test(m[1])) { agent = m[1].toLowerCase(); directive = m[2]; }
+    if (directive && (agent === null || agent === 'googlebot')) out.push(directive.trim().toLowerCase());
   }
-  const pick = groups.filter((g) => g.agents.includes('googlebot'));
-  const rules = (pick.length ? pick : groups.filter((g) => g.agents.includes('*'))).flatMap((g) => g.rules);
-  let best = null;
-  for (const r of rules) {
-    if (!r.path) continue;
-    const re = new RegExp('^' + r.path.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\\\$$/, '$'));
-    if (re.test(path) && (!best || r.path.length > best.path.length || (r.path.length === best.path.length && r.allow))) best = r;
-  }
-  return best ? !best.allow : false;
+  return out;
 }
 
 const hostOf = (d) => d.replace(/^https?:\/\//i, '').replace(/\/.*$/, '').replace(/^www\./i, '').toLowerCase();
@@ -96,7 +88,10 @@ async function check(source, domain, opts, robotsCache) {
     out.finalUrl = res.url;
     const xr = res.headers.get('x-robots-tag') ?? '';
     const metas = [...text.matchAll(/<meta\b([^>]*)>/gi)].map((m) => attrs(m[1]));
-    out.noindex = /noindex/i.test(xr) || metas.some((m) => /^(robots|googlebot)$/i.test(m.name ?? '') && /noindex/i.test(m.content ?? ''));
+    // Whole directives, so "none" (= noindex, nofollow) counts and "max-image-preview:none" does not.
+    const directives = [...xRobotsForGoogle(xr), ...metas.filter((m) => /^(robots|googlebot)$/i.test(m.name ?? '')).flatMap((m) => decode(m.content ?? '').toLowerCase().split(',').map((t) => t.trim()))];
+    out.noindex = directives.includes('noindex') || directives.includes('none');
+    out.pageNofollow = directives.includes('nofollow') || directives.includes('none');
     const canon = [...text.matchAll(/<link\b([^>]*)>/gi)].map((m) => attrs(m[1])).find((l) => (l.rel ?? '').toLowerCase().split(/\s+/).includes('canonical'));
     if (canon?.href) {
       const c = new URL(canon.href, res.url).href.replace(/#.*$/, '');
@@ -117,11 +112,12 @@ async function check(source, domain, opts, robotsCache) {
     if (!robotsCache.has(origin)) {
       try {
         const r = await get(`${origin}/robots.txt`, opts);
-        robotsCache.set(origin, r.res.ok ? r.text : '');
+        // 2xx: Googlebot's rules; 4xx: no rules; 5xx/429: Google pauses crawling the site, treated as blocked.
+        robotsCache.set(origin, r.res.ok ? rulesFor(parseRobots(r.text), ['googlebot']) : r.res.status === 429 || r.res.status >= 500 ? 'unavailable' : 'none');
       } catch { robotsCache.set(origin, null); }
     }
-    const robots = robotsCache.get(origin);
-    out.robotsBlocked = robots === null ? null : robotsBlocks(robots, new URL(res.url).pathname + new URL(res.url).search);
+    const rules = robotsCache.get(origin);
+    out.robotsBlocked = rules === null ? null : rules === 'unavailable' ? true : rules === 'none' ? false : !isAllowed(rules, res.url).allowed;
   } catch (e) {
     out.error = e.name === 'AbortError' ? 'timeout' : e.message;
   }
@@ -132,9 +128,10 @@ function verdict(r) {
   if (r.error) return `FETCH FAILED (${r.error})`;
   if (r.status !== 200) return `HTTP ${r.status}`;
   if (!r.links.length) return 'NO LINK FOUND (raw HTML; check in a browser if the page is JS-rendered)';
-  const followed = r.links.some((l) => !l.rel.length);
+  const followed = !r.pageNofollow && r.links.some((l) => !l.rel.length);
   const blockers = [r.noindex && 'page is noindex', r.robotsBlocked && 'robots.txt blocks Googlebot', r.canonicalElsewhere && `canonical -> ${r.canonicalElsewhere}`].filter(Boolean);
-  return `${followed ? 'FOLLOWED LINK' : 'LINK (all qualified: ' + [...new Set(r.links.flatMap((l) => l.rel))].join('/') + ')'}${blockers.length ? ` - but ${blockers.join('; ')}` : ''}`;
+  const kind = followed ? 'FOLLOWED LINK' : r.pageNofollow ? 'LINK (the source page sets a page-level nofollow)' : `LINK (all qualified: ${[...new Set(r.links.flatMap((l) => l.rel))].join('/')})`;
+  return `${kind}${blockers.length ? ` - but ${blockers.join('; ')}` : ''}`;
 }
 
 async function main() {

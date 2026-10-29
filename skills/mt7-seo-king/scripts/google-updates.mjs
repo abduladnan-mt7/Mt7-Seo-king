@@ -41,9 +41,10 @@ function parseArgs(argv) {
     else if (a === '--unverified') opts.unverified = true;
     else if (a === '--since') opts.since = argv[++i] ?? null;
     else if (a === '--kind') opts.kinds.push(argv[++i]);
-    else if (a === '--limit') opts.limit = Number(argv[++i]) || opts.limit;
+    // Explicit checks: "--window 0" (the drop's own day only) must not silently become 14.
+    else if (a === '--limit') { const n = Number(argv[++i]); if (!Number.isInteger(n) || n < 1) throw new Error('--limit must be a whole number of 1 or more'); opts.limit = n; }
     else if (a === '--around') opts.around = argv[++i] ?? null;
-    else if (a === '--window') opts.window = Number(argv[++i]) || opts.window;
+    else if (a === '--window') { const n = Number(argv[++i]); if (!Number.isFinite(n) || n < 0) throw new Error('--window must be a number of days, 0 or more'); opts.window = n; }
     else if (a === '-h' || a === '--help') opts.help = true;
     else throw new Error(`unknown argument: ${a}`);
   }

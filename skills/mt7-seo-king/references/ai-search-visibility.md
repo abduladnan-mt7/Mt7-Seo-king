@@ -58,9 +58,9 @@ Last verified 2026-10-20. Tags: `[G]` Google official; `[OFFICIAL]` OpenAI / Per
 ## 7. What works, in order (synthesis)
 
 1. Rank normally for the specific sub-queries with dedicated pages (`[G]` fan-out; `[PROVEN]` organic rankings carry into AI answers - Gabe). Rank in Bing too.
-2. Real reviews on the profiles the engines cite for your category (GBP first; Clutch/GoodFirms for agencies; G2 for SaaS; Yelp/TripAdvisor for local/hospitality - `[DATA]` sources above, `[INFERENCE]` for the mapping).
+2. Real reviews on the profiles the engines cite for your category (GBP first; Clutch/GoodFirms for agencies; G2 for SaaS; Yelp/TripAdvisor for local/hospitality - `[DATA]` sources above and [BrightLocal, 2026-08](https://www.brightlocal.com/resources/ai-directory-sources/), `[INFERENCE]` for the mapping).
 3. Earn inclusion in independent "best/top X" lists; never publish one crowning yourself.
-4. Off-site brand mentions: founder-led LinkedIn long-form (500-2,000 words) and YouTube videos with the brand in the title (`[DATA]` correlations; `[INFERENCE]` on the format).
+4. Off-site brand mentions: founder-led LinkedIn long-form (500-2,000 words) and YouTube videos with the brand in the title (`[DATA]` correlations: [Semrush, 2026-03](https://www.semrush.com/blog/linkedin-ai-visibility-study/), [Ahrefs, 2025-12](https://ahrefs.com/blog/ai-brand-visibility-correlations/); `[INFERENCE]` on the format).
 5. Specific, dated, quotable facts in visible HTML (prices, metrics, outcomes) - not only in PDFs or JSON-LD.
 6. Hygiene: Organization/WebSite schema, llms.txt if free, robots.txt allowing OAI-SearchBot, PerplexityBot, Bingbot, Googlebot (GPTBot and Google-Extended are training/Gemini choices - see `assets/robots-and-crawlers.md`).
 

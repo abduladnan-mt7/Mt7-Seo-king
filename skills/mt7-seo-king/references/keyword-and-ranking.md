@@ -55,7 +55,7 @@ Last verified 2026-10-20. Tags: `[G]` Google official; `[DATA]` study (sample si
 
 - `[G]` Organization markup helps Google "disambiguate your organization"; `sameAs` lists profiles. [Organization, 2026-09](https://developers.google.com/search/docs/appearance/structured-data/organization) Site names come from the home page and "references to it that appear on the web"; consistent naming and `alternateName` for variants. [Site names, 2025-12](https://developers.google.com/search/docs/appearance/site-names) Knowledge panels are automatic; claimable only once they exist. [Google](https://support.google.com/knowledgepanel/answer/9163198)
 - `[REPORTED]` Mueller: pick a name you can reasonably rank for; generic names compete with directories. [SEJ, 2025](https://www.searchenginejournal.com/google-cautions-businesses-against-generic-keyword-domains/553290/)
-- `[CLAIM]` When the bare brand term collides with bigger entities (e.g. a short brand that is also a motorbike model, a brake part and a chipset), win "brand + modifier" queries (software, city, agency, reviews, domain) first; `[DATA]` section 3 shows brand mentions drive brand visibility.
+- `[CLAIM]` When the bare brand term collides with bigger entities (e.g. a short brand that is also a motorbike model, a brake part and a chipset), win "brand + modifier" queries (software, city, agency, reviews, domain) first; `[DATA]` section 3 shows brand mentions correlate with AI Overview visibility (correlational, not causal: [Ahrefs, 2025-05](https://ahrefs.com/blog/ai-overview-brand-correlation/)).
 
 ## 8. Freshness, titles, descriptions, length
 
@@ -86,14 +86,14 @@ Record results in `assets/keyword-intent-map.csv`.
 
 ## 11. Myths the data contradicts
 
-- Longer content ranks better (`[G]` no; `[DATA]` Backlinko no relationship).
+- Longer content ranks better (`[G]` no; `[DATA]` [Backlinko](https://backlinko.com/search-engine-ranking) no relationship).
 - KD tells your odds (ignores your site and intent).
 - Nofollow links are ignored (hints since 2019-20).
-- #1 gets 30-40% of clicks (`[DATA]` AWR: 20% desktop, 9.7% with AIO).
-- Google uses my meta description (`[DATA]` rewrites ~63%).
+- #1 gets 30-40% of clicks (`[DATA]` [AWR](https://www.advancedwebranking.com/seo/organic-ctr): 20% desktop, 9.7% with AIO).
+- Google uses my meta description (`[DATA]` [Ahrefs](https://ahrefs.com/blog/meta-description-study/): rewrites ~63%).
 - Updating the date signals freshness (`[G]` warning sign).
 - E-E-A-T / topical authority are confirmed ranking factors (`[G]` E-E-A-T is not; topic authority is news-only).
-- Page speed / Lighthouse scores move rankings (`[DATA]` ~zero correlation) - sell performance as UX/conversion, not SEO.
+- Page speed / Lighthouse scores move rankings (`[DATA]` ~zero correlation: [Backlinko](https://backlinko.com/search-engine-ranking)) - sell performance as UX/conversion, not SEO.
 - AI Overviews make everything zero-click (mixed; Semrush same-keyword data shows no rise).
 
 ## Could not verify

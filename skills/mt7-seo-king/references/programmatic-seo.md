@@ -7,13 +7,13 @@ Templates plus data can produce useful pages ("PDF to Word", "USD to INR", "Noti
 - Scaled content abuse: "many pages are generated for the primary purpose of manipulating search rankings and not helping users", however they are made (AI, templates, humans) `[G]` ([spam policies](https://developers.google.com/search/docs/essentials/spam-policies#scaled-content)).
 - Doorway abuse: multiple similar pages that each target a variation (city, synonym) and funnel to one destination `[G]`.
 - "Automated transformations like synonymizing, translating" of content that adds little value are named scaled-content examples `[G]`.
-- The August 2026 spam update hit "substantially similar pages" sites hard (SKILL.md "Never do") `[DATA]`.
+- The August 2026 spam update hit scaled, mostly programmatic sites hard: in four practitioner case studies the reported losses ran from 14K to 200K+ queries (SKILL.md "Never do") `[WARNED]` ([GSQi, 2026-08-31](https://www.gsqi.com/marketing-blog/august-2026-google-spam-update-case-studies/)).
 
 ## 2. The gate (every page type, before the first batch)
 
 A page type passes only if all four are true:
 1. **Distinct data per page.** Something on page N (values, worked examples, constraints, a rate, a table, a format quirk) is not on page N+1. Swapping one noun does not count `[G]`.
-2. **Real demand per page.** The query exists in GSC, Bing, Keyword Planner or autocomplete. "Zero volume" pages are fine only if they are cheap to keep out of the index `[DATA]` `[INFERENCE]`.
+2. **Real demand per page.** The query exists in GSC, Bing, Keyword Planner or autocomplete. "Zero volume" pages are fine only if they are cheap to keep out of the index `[INFERENCE]`.
 3. **The page does the job.** A converter page converts, a comparison page compares from first-hand use, and a location page has local proof `[G]` (helpful content).
 4. **You would build it without search engines.** If the only reason for the page is a keyword, it fails `[G]`.
 

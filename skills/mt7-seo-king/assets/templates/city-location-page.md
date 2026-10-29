@@ -19,7 +19,7 @@ If any box is unticked: do not build the page. Put the proof on the industry pag
 ## Skeleton
 1. **Answer-first:** what you do in this city and for whom; how engagements actually run here (in person / remote + visits).
 2. **Local clients and work** (the proof): each with what was built, a result, a screenshot, a quote - with permission.
-3. **How to meet you here:** office address if real and staffed (NAP identical to GBP `[DATA]`), or service area + how visits work. No virtual office `[G]`.
+3. **How to meet you here:** office address if real and staffed (NAP identical to GBP `[DATA]` [Whitespark, 2025-11](https://whitespark.ca/local-search-ranking-factors/)), or service area + how visits work. No virtual office `[G]`.
 4. **People here:** named staff/founder with roles.
 5. **Services offered in this city** - linked to the service pages (not re-described).
 6. **Local context that is true:** industries you serve here, local platforms/integrations, local pricing in local currency.
@@ -31,6 +31,6 @@ If any box is unticked: do not build the page. Put the proof on the industry pag
 - Service-area businesses: areas within ~2 h of the base; cities farther away are organic-only.
 
 ## Do not
-- Create "<service> in <city>" for every nearby city `[G]` `[WARNED]` (Aug 2026 spam cases lost 14K-200K+ queries).
+- Create "<service> in <city>" for every nearby city `[G]` `[WARNED]` (the Aug 2026 spam update's case studies were scaled, templated sites that lost 14K-200K+ queries, [GSQi, 2026-08-31](https://www.gsqi.com/marketing-blog/august-2026-google-spam-update-case-studies/)).
 - Put the city or service in the GBP name `[G]`.
 - Stuff the city name into every heading; write it where a human would.

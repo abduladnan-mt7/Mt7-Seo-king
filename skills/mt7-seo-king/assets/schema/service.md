@@ -38,4 +38,4 @@
 
 Rules
 - Prices in markup must appear in the visible text `[G]`; delete `offers` if the page shows no price.
-- `areaServed` lists places you genuinely serve; it does not create local rankings `[DATA]` (service areas are "visual" only in Sterling Sky's test).
+- `areaServed` lists places you genuinely serve; it does not create local rankings `[CLAIM]` (service areas are "visual" only in Sterling Sky's small test centred on its own listing: [Sterling Sky, 2023](https://www.sterlingsky.ca/does-the-service-area-in-google-my-business-impact-ranking/)).

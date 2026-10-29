@@ -4,8 +4,8 @@ Last verified 2026-10-20. The rules are platform policy, not taste:
 - `[G]` Google prohibits incentives ("payment, discounts, free goods and/or services"), gating ("Discourage or prohibit negative reviews, or selectively solicit positive reviews"), conflict-of-interest reviews (incl. "a contractual or consultory relationship" - staff, partners, agencies you work with) and staff quotas. Penalties: new reviews blocked, existing ones unpublished, a consumer warning. [Contribution policy](https://support.google.com/contributionpolicy/answer/7400114) [Restrictions](https://support.google.com/business/answer/14114287?hl=en)
 - `[OFFICIAL]` Trustpilot: invite only people "who have had a genuine experience"; invite "everyone in the same way"; no cherry-picking, no incentives, no family/staff/shareholders; penalties up to a Consumer Warning or termination. [Trustpilot guidelines v7, 2025-05](https://legal.trustpilot.com/for-reviewers/guidelines-for-businesses)
 - `[OFFICIAL]` Clutch verifies reviewer identity; reviews weigh most in its score; Premier Verified needs >= 3 reviews with one in the last 12 months. [Clutch Help](https://help.clutch.co/en/knowledge/get-verified)
-- `[WARNED]` Bursts get blocked: 2.75x baseline for 3 months -> 30-day posting block and 57.5% of 595 reviews removed (Sterling Sky 2026-09-28). `[DATA]` Review recency and steady velocity rank above total count (Whitespark 2025-11; Sterling Sky 2025-11).
-- `[DATA]` Text reviews beat star-only; keywords inside reviews did not help (so never ask for them).
+- `[WARNED]` Bursts get blocked: 2.75x baseline for 3 months -> 30-day posting block and 57.5% of 595 reviews removed (Sterling Sky 2026-09-28). `[DATA]` Review recency and steady velocity rank above total count ([Whitespark, 2025-11](https://whitespark.ca/local-search-ranking-factors/); [Sterling Sky, 2025-11](https://www.sterlingsky.ca/what-gets-you-ranking-for-near-me-2025/)).
+- `[DATA]` Text reviews beat star-only ([Sterling Sky, 2025-11](https://www.sterlingsky.ca/what-gets-you-ranking-for-near-me-2025/)); `[CLAIM]` keywords inside reviews did not help in a one-listing test ([Sterling Sky, 2023-01](https://www.sterlingsky.ca/does-the-text-of-a-google-review-affect-map-pack-rankings/)) (so never ask for them).
 
 ## Ground rules (print these)
 1. Same ask, same words, to **every** customer after delivery - not only the happy ones.
@@ -14,7 +14,7 @@ Last verified 2026-10-20. The rules are platform policy, not taste:
 4. No staff, family, partners, vendors, or anyone with a "contractual or consultory relationship".
 5. One ask + one reminder at most; then stop.
 6. Steady cadence: spread requests over the delivery calendar; never batch a backlog into one week.
-7. Reply to every review, including negative ones, factually and briefly `[DATA]` 89% of consumers expect replies.
+7. Reply to every review, including negative ones, factually and briefly `[DATA]` 89% of consumers expect replies ([BrightLocal, 2026-02](https://www.brightlocal.com/research/local-consumer-review-survey/)).
 8. Keep a log (date asked, platform, outcome) so velocity stays natural and nobody is asked twice.
 
 ## Which platform to ask for `[INFERENCE from the citation data]`
@@ -77,4 +77,4 @@ Subject: How did we do? Your honest review on Trustpilot
 - Review swaps with other businesses `[G]` conflict of interest.
 - Buy reviews `[WARNED]`; India's BIS IS 19000:2022 bars purchased reviews.
 - Put review stars from your own reviews into your site's structured data `[G]` ineligible.
-- Keyword-stuff replies or ask reviewers to mention services/cities `[DATA]` no effect, `[G]` suspicious.
+- Keyword-stuff replies or ask reviewers to mention services/cities `[CLAIM]` no effect in a one-listing test of review text ([Sterling Sky, 2023-01](https://www.sterlingsky.ca/does-the-text-of-a-google-review-affect-map-pack-rankings/)), `[G]` suspicious.

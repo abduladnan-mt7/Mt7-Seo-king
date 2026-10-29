@@ -3,7 +3,7 @@
 Takes 30-60 minutes. Copy, date it, fill the blanks, keep the history. Tags as in SKILL.md. Last verified 2026-10-20.
 
 ## 0. Caveats to remember while reading the numbers
-- `[DATA]` ~46.77% of clicks come from anonymized queries, and the share is worse on small sites (Ahrefs 2026-02, 22B clicks / 887,534 properties) - the query table understates demand; the Pages tab is the complete view.
+- `[DATA]` ~46.77% of clicks come from anonymized queries, and the share is worse on small sites ([Ahrefs, 2026-02](https://ahrefs.com/blog/gsc-anonymized-queries/), 22B clicks / 887,534 properties) - the query table understates demand; the Pages tab is the complete view.
 - `[PROVEN]` Image packs inside web results count as Web impressions at the block's position - impressions up, CTR down, nothing changed.
 - `[G]` AI Mode is inside Performance (Web) since 2025-06; the Generative AI report is impressions only and may be blank for small sites.
 - `[G]` Averages hide the mix: a new query at position 40 lowers "average position" while nothing got worse. Compare per query/page.
@@ -39,7 +39,7 @@ Filter: Queries, last 3 months, exclude branded, position between 8 and 20, impr
 |---|---|---|---|---|---|---|
 | | | | | | | |
 
-Retitle rule `[G]` `[DATA]`: unique, 50-60 chars, query words first, brand last, no extra keywords (SearchPilot: extra keywords did not help). Change one thing per page so the effect is attributable; hold 4-8 weeks.
+Retitle rule `[G]` `[DATA]`: unique, 50-60 chars, query words first, brand last, no extra keywords ([SearchPilot, 2025-09](https://www.searchpilot.com/resources/case-studies/expanding-your-title-tag-testing-strategy): extra keywords did not help). Change one thing per page so the effect is attributable; hold 4-8 weeks.
 
 ## 5. Queries with impressions but no fitting page
 | Query | Impr | Intent | SERP format seen | Page type to build (or skip) |
@@ -51,7 +51,7 @@ Retitle rule `[G]` `[DATA]`: unique, 50-60 chars, query words first, brand last,
 |---|---|---|---|---|
 | | | | | |
 
-## 7. Pages older than 6 months not in the top 10 for their primary query `[DATA]`
+## 7. Pages older than 6 months not in the top 10 for their primary query `[DATA]` ([Ahrefs, 2025-05](https://ahrefs.com/blog/how-long-does-it-take-to-rank/))
 | Page | Primary query | Pos | Decision: refresh substantively / merge into ... / leave |
 |---|---|---|---|
 | | | | |

@@ -22,11 +22,11 @@ Owner rules (they override generic advice):
 | Finding | Evidence | Reading |
 |---|---|---|
 | Brand at ~7 with 1 click | GSC, date view | A short, shared name doesn't rank by default for that query `[REPORTED]`. Win "Northwind + modifier" (studio, agency, reviews, city) first `[CLAIM]` |
-| Non-brand ~0 | GSC | No page targets a buyer query in buyer words; zero reviews keeps the brand off the directory pages that own "best X in city" `[DATA]`; the ccTLD move dropped a country signal `[G]`. Not a penalty; Manual actions empty |
+| Non-brand ~0 | GSC | No page targets a buyer query in buyer words; zero reviews keeps the brand off the directory pages that own "best X in city" `[DATA]` ([BrightLocal, 2024-10](https://www.brightlocal.com/research/business-listings-visibility-study/)); the ccTLD move dropped a country signal `[G]`. Not a penalty; Manual actions empty |
 | Mixed canonicals (apex vs www) | URL Inspection | Consolidation drag; `sitemap-audit.mjs` shows every sitemap URL 200 and self-canonical, so the remaining lag is Google's, expected to settle `[G]` |
 | Change of Address unfiled | owner | Signals are forwarded for 180 days only after filing; file from each old property (apex and www separately) `[G]` |
 | No update overlap | `google-updates.mjs --around <move date>` | Nothing ranking-related within 14 days, so the dip after the move is consolidation, not an update `[G]` |
-| Zero reviews everywhere | owner | Reviews drive directory placement and are heavily cited in AI answers for agencies `[DATA]` `[OFFICIAL]` |
+| Zero reviews everywhere | owner | Reviews drive directory placement and are heavily cited in AI answers for agencies `[DATA]` ([SE Ranking, 2026-01](https://seranking.com/blog/review-platforms-in-ai-overviews/)) `[OFFICIAL]` |
 
 Not measured: competitors' backlink profiles (no paid tool), CrUX field data (too little traffic).
 
@@ -44,7 +44,7 @@ Not measured: competitors' backlink profiles (no paid tool), CrUX field data (to
 |---|---|---|
 | "northwind" + modifier | own site + profiles | P0: entity work + reviews |
 | "web development company in <metro>" | agency pages + directory city pages | P1: a real city page (it passes the gate: four local clients) |
-| "best web development company in <metro>" | directories + listicles | Don't build a page; get reviews and pitch independent lists `[DATA]` `[WARNED]` |
+| "best web development company in <metro>" | directories + listicles | Don't build a page; get reviews and pitch independent lists `[DATA]` ([BrightLocal, 2024-10](https://www.brightlocal.com/research/business-listings-visibility-study/)) `[WARNED]` |
 | "AI chatbot development company India" | vendor pages + listicles | P1: one service page per real offering `[PROVEN]` |
 | "website cost in India" | guides + pricing pages | P1: a priced guide with real INR ranges `[PROVEN]` |
 | "hotel booking engine India" | vendor pages | P1: hospitality industry page anchored on the resort case (rule 2) |
@@ -72,8 +72,8 @@ In order:
 1. Case studies, plus an editorial mention from each client, with any footer credit nofollowed `[G]`.
 2. Identical local profiles.
 3. Clutch and GoodFirms reviews.
-4. Journalist-source platforms as an Indian SMB tech source `[DATA]`.
-5. One original-data piece per half-year, such as anonymised performance across client sites `[DATA]`.
+4. Journalist-source platforms as an Indian SMB tech source `[DATA]` ([BuzzStream, 2025-07](https://www.buzzstream.com/blog/journalist-request-platform-study/)).
+5. One original-data piece per half-year, such as anonymised performance across client sites `[DATA]` ([Muck Rack, 2026](https://muckrack.com/research/state-of-journalism)).
 6. Broken-link outreach on one topic where the agency has a real replacement page (`outreach-kit.md` section F).
 7. Pitch independent "agencies in <metro>" lists.
 
@@ -92,5 +92,5 @@ Track every link earned with `link-check.mjs`.
 - Google's canonical is the apex everywhere, and Change of Address is accepted.
 - "Northwind + modifier" queries are climbing, and brand clicks are above a handful a month.
 - 10+ real Google reviews, plus 3+ each on Clutch and GoodFirms.
-- New pages indexed, with non-brand impressions appearing (positions 20-50 are normal at this stage) `[DATA]`.
-- No #1 promised. Nobody can guarantee one `[G]`, and 1.74% of new pages reach the top 10 within a year `[DATA]`.
+- New pages indexed, with non-brand impressions appearing (positions outside the top 10 are normal at this stage) `[DATA]` ([Ahrefs, 2025-05](https://ahrefs.com/blog/how-long-does-it-take-to-rank/)).
+- No #1 promised. Nobody can guarantee one `[G]`, and 1.74% of new pages reach the top 10 within a year `[DATA]` ([Ahrefs, 2025-05](https://ahrefs.com/blog/how-long-does-it-take-to-rank/)).

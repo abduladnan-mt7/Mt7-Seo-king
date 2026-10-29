@@ -75,7 +75,7 @@ Notes `[INFERENCE]`: never `Disallow: /` for `*` on a site you want found; do no
 
 ## llms.txt - optional hygiene only
 
-- `[G]` Google Search does not use it (changelog 2026-06-15). `[REPORTED]` Mueller: "no AI system currently uses llms.txt". `[DATA]` 97% of llms.txt files got zero requests in May 2026 (137K domains, Ahrefs); no correlation with AI citations across ~300K domains (SE Ranking, 2026-10).
+- `[G]` Google Search does not use it (changelog 2026-06-15). `[REPORTED]` Mueller: "no AI system currently uses llms.txt". `[DATA]` 97% of llms.txt files got zero requests in May 2026 (137K domains, [Ahrefs, 2026-06](https://ahrefs.com/blog/llmstxt-study/)); no correlation with AI citations across ~300K domains ([SE Ranking, 2026-10](https://seranking.com/blog/llms-txt/)).
 - If you keep one: a short Markdown index of the site's canonical pages with one-line descriptions; keep it accurate (never let it promise things the site no longer offers); never spend more than an hour on it.
 
 ## Agent access beyond robots.txt

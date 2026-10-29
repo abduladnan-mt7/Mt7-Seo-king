@@ -1,6 +1,6 @@
 # "How to choose a <provider type> in <city/country>" guide brief
 
-The honest substitute for a self-ranking "best X in <city>" listicle. `[DATA]` "best X" SERPs are owned by directories and listicles (68% directories for "best attorney"), so a business page rarely wins them; `[WARNED]` publishing your own ranked list is risky. A buyer's guide targets the adjacent query ("how to choose", "what to look for", "questions to ask", "<provider> cost in <city>") that a business site can legitimately win and that AI engines quote.
+The honest substitute for a self-ranking "best X in <city>" listicle. `[DATA]` "best X" SERPs are owned by directories and listicles (68% directories for "best attorney": [BrightLocal, 2024-10](https://www.brightlocal.com/research/business-listings-visibility-study/)), so a business page rarely wins them; `[WARNED]` publishing your own ranked list is risky. A buyer's guide targets the adjacent query ("how to choose", "what to look for", "questions to ask", "<provider> cost in <city>") that a business site can legitimately win and that AI engines quote.
 
 ## Gate
 - [ ] You can write the guide so that a reader could use it to hire a competitor.
